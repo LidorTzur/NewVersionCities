@@ -267,7 +267,7 @@ DataBase.SettingCosts = readtable(Data,'Sheet','Money','Range','A2:I36','ReadVar
 DataBase.OperatingCosts = readtable(Data,'Sheet','Money','Range','A41:I75','ReadVariableNames',true, 'ReadRowNames',true);
 DataBase.ILSPerTon = readtable(Data,'Sheet','Money','Range','L19:O23','ReadVariableNames',false, 'ReadRowNames',true);
 
-%% 
+%% read the trends in consumption for the target year (empty)
 DataBase.ChnageStruct = struct;
 DataBase.ChnageStruct.Electricity = readtable("The Three Scenarios.xlsx",'Sheet','ChangesInConsumptionType','Range','A2:B5','ReadRowNames',true);
 DataBase.ChnageStruct.Water = readtable("The Three Scenarios.xlsx",'Sheet','ChangesInConsumptionType','Range','A8:B12','ReadRowNames',true);

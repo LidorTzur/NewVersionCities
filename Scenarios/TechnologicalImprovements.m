@@ -3,6 +3,7 @@ addpath("CalcFunctions");
 addpath("UI");
 addpath("Data");
 
+%%insert the changes from the scenarios excel
 ImprovementValues = readtable("The Three Scenarios.xlsx",'Sheet','Improvements','Range','B2:B5','ReadVariableNames',false);
 
 ColumnNames = ones(1, Years);
@@ -27,8 +28,8 @@ DataBase.ElectricityConsumptionEmissionsInTransportation = ElectricityConsumptio
 
 %% Water Desalination Improvements
 
-ElectricityFromWaterCoefficientsTable = array2table(zeros(height(DataBase.ElectricityConsumptionCoefficients),Years));
-ElectricityFromWaterCoefficientsTable{:,1} = DataBase.ElectricityConsumptionCoefficients;
+ElectricityFromWaterCoefficientsTable = array2table(zeros(height(DataBase.ElectricityConsumptionCoefficients),Years)); %create a table in a size of 6 on number of years
+ElectricityFromWaterCoefficientsTable{:,1} = DataBase.ElectricityConsumptionCoefficients; % insert to the 2017 year (first column) the ElectricityConsumptionCoefficients we have
 WaterDesalinationImprovements = ReductionVectorCalc(BaseYear,TargetYear, ImprovementValues{1,1});
 for i = 1:Years
     ElectricityFromWaterCoefficientsTable{1,i} = ElectricityFromWaterCoefficientsTable{1,1}.*WaterDesalinationImprovements(i);
@@ -58,6 +59,7 @@ DataBase.NaturalGasImprovements = NaturalGasImprovements;
 % end    
 
 %% Other functions
+%return vector of percentage to reduce (1-improve)
 function ReductionVector = ReductionVectorCalc(StartYear, EndYear, EndYearVal)
 Period = EndYear-StartYear+1;
 ReductionVector = ones(1, Period);

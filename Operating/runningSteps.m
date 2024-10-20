@@ -29,7 +29,8 @@ switch orderIndex
 
             [WaterSumCurrent, GlobalWaterDiff, LocalWaterDiff] = WaterSumCalcOnlyOne(ConsumptionAmounts, WaterFromFood,i);
             [AreaSumCurrent, GlobalAreaDiff, LocalAreaDiff] = AreaSumCalcOnlyOne(Resources);
-
+               
+            %טבלה שנותנת את ההפרש בפליטות בין 2017 ל2050
             %OnlyOneAnalysis{i,1} = EmissionsSumCurrentBase(1);
             OnlyOneAnalysis{i,1} = GlobalDiff+LocalDiff;
             OnlyOneAnalysis{i,2} = GlobalDiff;

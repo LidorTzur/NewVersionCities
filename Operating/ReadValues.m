@@ -24,6 +24,7 @@ DataBase.IndustryElectricityConsumptionChange = IndustryElectricityConsumptionCh
 
 ElectricityLossRatio = readtable(Data,'Sheet','ElectricityConsumption','Range','B17:B17','ReadVariableNames',false);
 DataBase.ElectricityLossRatio = ElectricityLossRatio{1,1};
+
 %% Transportation Cosnumption
 RowNames = {'Bus', 'Car', 'Minibus', 'Motorcycle', 'Truck', 'LCV', 'PassengerTrain','Freight Train', 'Total'};
 DataBase.TransportationConsumptionTable = array2table(zeros(9, Years),'RowNames', RowNames);
@@ -58,19 +59,22 @@ DataBase.FoodRowName = table2cell(readtable(Data,'Sheet','Food','Range','A5:A68'
 TotalGrowthForLocalFood = readtable(Data,'Sheet','Food','Range','AJ3:AJ3','ReadVariableNames',false);
 DataBase.TotalGrowthForLocalFood = TotalGrowthForLocalFood{1,1};
 %% water consumption
-DataBase.WaterConsumptionCell = cell(1,Years);
+DataBase.WaterConsumptionCell = cell(1,Years); %יוצרת מערך בגודל של שורה אחת עם ההפרש של השנים בין שנת הבסיס למטרה של עמודות
 RowNames = {'Agriculture', 'Marginal Water Percentage', 'Home Consumption(Urban)', 'Industry', 'Water for Nature', 'Water for Neighbors'};
+%שמה בעמודה ראשונה של המערך טבלה עם 6 שורות ו5 עמודות, כאשר היא נותנת
+%לשורות כותרות
 DataBase.WaterConsumptionCell{1} = array2table(zeros(6,5), 'RowNames', RowNames);
 DataBase.WaterConsumptionCell{1}{:,3:5} = table2array(readtable(Data,'Sheet','Water','Range','F12:H17','ReadVariableNames',false));
-% choosing brakish, treated water water and flood of 2017.
+% choosing brakish, treated water water and flood of 2017. and put it in
+% the 3-5 columns
 
 DataBase.DrinkingWater = table2array(readtable(Data,'Sheet','Water','Range','E12:E17','ReadVariableNames',false));
 % choosing drinking water for all purpuses.
 
 DiselinatedWaterPercntage = readtable(Data,'Sheet','Water','Range','N44:N44','ReadVariableNames',false);
-% precentage of desalinated from all SHAFIRIM
+% precentage of desalinated from all SHAFIRIM - come in the shape of table
 
-DataBase.DiselinatedWaterPercntage = DiselinatedWaterPercntage{1,1};
+DataBase.DiselinatedWaterPercntage = DiselinatedWaterPercntage{1,1}; %make the table to a single value type in the database
 DiselinatedWaterPercntage = DiselinatedWaterPercntage{1,1};
 DataBase.WaterConsumptionCell{1}{:,1} = DataBase.DrinkingWater*(1-DiselinatedWaterPercntage);
 % the total water from nature is all the drinkingWater X precentage of not desalinated
@@ -169,6 +173,7 @@ DataBase.EmissionsFromElectricityConsumption = table2array(readtable(Data,'Sheet
 DataBase.ElctricityFromNatualGasCoeff = array2table(zeros(2,1));
 RowNames = {'Converted', 'Combined Cycle'};
 DataBase.ElctricityFromNatualGasCoeff.Properties.RowNames = RowNames;
+% FROM ElectricityConsumption SHEET IN THE EXCEL
 DataBase.ElctricityFromNatualGasCoeff{1,1}  = 474;
 DataBase.ElctricityFromNatualGasCoeff{2,1}  = 369;
 
@@ -206,6 +211,7 @@ DataBase.FuelConsumptionCoefficients.Properties.VariableNames = {'Bus', 'Car', '
 
 DataBase.FuelConsumptionCoefficients{1,1:6} = table2array(readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','U17:Z17','ReadVariableNames',false));
 DataBase.FuelConsumptionCoefficients{2,1:6} = table2array(readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','AD17:AI17','ReadVariableNames',false));
+% נראלי שפה זה טעות אמור להיות 17
 DataBase.FuelConsumptionCoefficients{3,1:6} = table2array(readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','AM18:AR18','ReadVariableNames',false));
 DataBase.FuelConsumptionCoefficients{4,1:6} = table2array(readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','AV17:BA17','ReadVariableNames',false));
 DataBase.FuelConsumptionCoefficients{5,1:6} = table2array(readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','BE17:BJ17','ReadVariableNames',false));

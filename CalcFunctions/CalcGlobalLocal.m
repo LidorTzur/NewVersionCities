@@ -1,3 +1,4 @@
+%Calc the Global emission and the Local emission
 function [GlobalLocalEmission, TotalGlobalLocal] = CalcGlobalLocal(EmissionsByYears)
     GlobalLocalEmission = cell(2,width(EmissionsByYears));
     TotalGlobalLocal = table(2,width(EmissionsByYears));

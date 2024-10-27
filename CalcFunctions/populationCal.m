@@ -1,5 +1,6 @@
 function [population] = populationCal(PrecentegeByTheYears)
 %% population data
+% Calculate the pupolations over the years
 global BaseYear
 population  = array2table(zeros(4,34));
 RowNames = {'Num','Years', 'Israel population', 'Palestinian Authority population'};

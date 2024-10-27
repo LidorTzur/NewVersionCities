@@ -236,7 +236,7 @@ DataBase.UrbanConsumptionPercentages = table2array(readtable(Data,'Sheet','Water
 DataBase.RatioForBrackishWater = table2array(readtable(Data,'Sheet','Water','Range','P23:Q23','ReadVariableNames',false));
 
 %% Calc Electricity manufacturing
-DataBase.EmissionsCoefficientsForPv = readtable(Data,'Sheet','PVEmissions','Range','I8:J42','ReadVariableNames',true);
+DataBase.EmissionsCoefficientsForPv = readtable(Data,'Sheet','PVEmissions','Range','I8:J40','ReadVariableNames',true);
 % Coefficients from mining and fuel manufacturing 
 DataBase.EmissionsCoefficientsUpstreamElectricity = table2array(readtable(Data,'Sheet','ElectricityManufactureEmissions','Range','B37:G43','ReadVariableNames',false))';
 % How many tons of fuel is needed for 1 kwh of electricity

@@ -7,8 +7,8 @@ function [WaterSum, GlobalWaterDiff, LocalWaterDiff] = WaterSumCalcOnlyOne(Consu
 
     if WaterFor2050 ~= WaterFor2022 % If the amount of water between the base year and the target year is different, the amount of water is calculated as the difference between them
           LocalWaterDiff = WaterFor2050-WaterFor2017;
-         
-             if i == 19   %The reason for this section is to produce a result that is considered in the base year which is 2017 for the article
+             % changed from 19 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+             if i == 17   %The reason for this section is to produce a result that is considered in the base year which is 2017 for the article
                LocalWaterDiff = WaterFor2050-WaterFor2022;
              end 
          

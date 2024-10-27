@@ -1,4 +1,5 @@
 function [Area, Costs, Water] = CalcTotalResources(Resources, ConsumptionAmounts,WaterFromFood)
+   global BaseYear
     Area = array2table(zeros(5,width(Resources)));
     Costs = array2table(zeros(5,width(Resources)));
     Water = array2table(zeros(5,width(Resources)));
@@ -7,7 +8,7 @@ function [Area, Costs, Water] = CalcTotalResources(Resources, ConsumptionAmounts
     Water.Properties.RowNames = {'Ground Water', 'Desalinated Water', 'Brackish & Reservoirs Water', 'Treated Wastewater', 'Global Water'};
     ColumnNames = ones(1,width(Resources));
     for i = 1:width(ColumnNames)
-        ColumnNames(i) = 2016+i;
+        ColumnNames(i) = BaseYear-1+i; % changed
     end
     ColumnNames = string(ColumnNames);
     Area.Properties.VariableNames = ColumnNames;

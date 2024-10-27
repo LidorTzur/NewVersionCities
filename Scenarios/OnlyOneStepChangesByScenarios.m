@@ -1,5 +1,6 @@
 function [OnlyOneStepScenariosTable, ConsumptionChanges] = OnlyOneStepChangesByScenarios(Data, ScenarioNumber, Years, S)
 %% Prep
+global BaseYear
 
 CurrentEnergyConsumptionFromRenewableEnergies = Data.InitialPercentage(3);
 CurrentEnergyConsumptionFromNaturalGas = Data.InitialPercentage(2);
@@ -10,7 +11,7 @@ OnlyOneStepScenariosTable = array2table(zeros(19, Years), 'RowNames', RowNames);
 ConsumptionChanges = array2table(zeros(sum(Type == "Consumption"), Years), 'RowNames', RowNames(Type == "Consumption"));
 
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2016+i;
+    ColumnNames(i) = BaseYear-1+i; % changed!!!!!!!!
 end
 ColumnNames = string(ColumnNames);
 OnlyOneStepScenariosTable.Properties.VariableNames = ColumnNames;
@@ -126,22 +127,22 @@ switch ScenarioNumber
             OnlyOneStepScenariosTable{14,i} = OnlyOneStepScenariosTable{14, i} - 1;
         end
     case 15
-        OnlyOneStepScenariosTable{15,:} = GrowthVectorCalc(2017,2030,Years, S(15));
+        OnlyOneStepScenariosTable{15,:} = GrowthVectorCalc(BaseYear,2030,Years, S(15));% change !!!!!!!!
         for i = 1:Years
             OnlyOneStepScenariosTable{15,i} = OnlyOneStepScenariosTable{15, i} - 1;
         end
     case 16
-        OnlyOneStepScenariosTable{16,:} = GrowthVectorCalc(2017,2030,Years, S(16));
+        OnlyOneStepScenariosTable{16,:} = GrowthVectorCalc(BaseYear,2030,Years, S(16));% change !!!!!!!!
         for i = 1:Years
             OnlyOneStepScenariosTable{16,i} = OnlyOneStepScenariosTable{16, i} - 1;
         end
     case 17
-        OnlyOneStepScenariosTable{17,:} = GrowthVectorCalc(2017,2030,Years, S(17));
+        OnlyOneStepScenariosTable{17,:} = GrowthVectorCalc(BaseYear,2030,Years, S(17));% change !!!!!!!!
         for i = 1:Years
             OnlyOneStepScenariosTable{17,i} = OnlyOneStepScenariosTable{17, i} - 1;
         end
     case 19
-        OnlyOneStepScenariosTable{19,:} =  ReductionVectorCalc(2017,2030,Years,S(19));
+        OnlyOneStepScenariosTable{19,:} =  ReductionVectorCalc(BaseYear,2030,Years,S(19));% change !!!!!!!!
     otherwise
 end
 end

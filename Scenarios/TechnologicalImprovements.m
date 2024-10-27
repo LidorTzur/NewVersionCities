@@ -2,13 +2,13 @@ addpath("Scenarios");
 addpath("CalcFunctions");
 addpath("UI");
 addpath("Data");
-
+global BaseYear
 %%insert the changes from the scenarios excel
 ImprovementValues = readtable("The Three Scenarios.xlsx",'Sheet','Improvements','Range','B2:B5','ReadVariableNames',false);
 
 ColumnNames = ones(1, Years);
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2016+i;
+    ColumnNames(i) = 2018+i;
 end
 ColumnNames = string(ColumnNames);
 %% Electric Vehicles Improvements
@@ -29,7 +29,7 @@ DataBase.ElectricityConsumptionEmissionsInTransportation = ElectricityConsumptio
 %% Water Desalination Improvements
 
 ElectricityFromWaterCoefficientsTable = array2table(zeros(height(DataBase.ElectricityConsumptionCoefficients),Years)); %create a table in a size of 6 on number of years
-ElectricityFromWaterCoefficientsTable{:,1} = DataBase.ElectricityConsumptionCoefficients; % insert to the 2017 year (first column) the ElectricityConsumptionCoefficients we have
+ElectricityFromWaterCoefficientsTable{:,1} = DataBase.ElectricityConsumptionCoefficients; % insert to the 2019 year (first column) the ElectricityConsumptionCoefficients we have
 WaterDesalinationImprovements = ReductionVectorCalc(BaseYear,TargetYear, ImprovementValues{1,1});
 for i = 1:Years
     ElectricityFromWaterCoefficientsTable{1,i} = ElectricityFromWaterCoefficientsTable{1,1}.*WaterDesalinationImprovements(i);

@@ -1,4 +1,6 @@
 function [EmissionsByYears, ConsumptionAmounts] = GrowthInPopulation (Data, PercentageByTheYears, Years)
+
+    global BaseYear
 %% Preparations
 
     EmissionsByYears=cell(6,Years);
@@ -60,7 +62,7 @@ function [EmissionsByYears, ConsumptionAmounts] = GrowthInPopulation (Data, Perc
     EmissionsByYears = cell2table(EmissionsByYears, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     EmissionsByYears.Properties.VariableNames = ColumnNames;
@@ -69,7 +71,7 @@ function [EmissionsByYears, ConsumptionAmounts] = GrowthInPopulation (Data, Perc
     ConsumptionAmounts = cell2table(ConsumptionAmounts, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     ConsumptionAmounts.Properties.VariableNames = ColumnNames;

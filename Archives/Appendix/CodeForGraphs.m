@@ -743,7 +743,7 @@ legend('Emissions', 'Kilotons', 'Percentage')
 
 hold off
 
-%% delta 2017-2030 - only S2
+%% delta 2019-2030 - only S2
 ScenariosNames = {'Growth in Population', 'Electricity Saving Scenario', 'Increase in Diselinated Water', 'Reducing Beef Consumption', '5', 'Change In Energy Consumption From Renewable Energies', 'Electricity Production by Natural Gas','Electricity Saving', 'Waste Minimization','Recycle Waste', '11', '12', 'Transition To Public Transportation', 'Transition to Electric Car', 'Transition to Electric Van', 'Transition to Electric Truck', 'Transition to Electric Bus','18', 'Water Saving'};
 
 Co2eS2 = SensitivityAnalysisTableOnlyOneStepS2;
@@ -802,7 +802,7 @@ plot(x, y3, 'LineWidth', 4, 'Color', [0.255 0.127 0.80])
 legend('Emissions', 'Sum', 'Percentage')
 hold off
 
-%% %% delta 2017-2030 - only S3
+%% %% delta 2019-2030 - only S3
 ScenariosNames = {'Growth in Population', 'Electricity Saving Scenario', 'Increase in Diselinated Water', 'Reducing Beef Consumption', '5', 'Change In Energy Consumption From Renewable Energies', 'Electricity Production by Natural Gas','Electricity Saving', 'Waste Minimization','Recycle Waste', '11', '12', 'Transition To Public Transportation', 'Transition to Electric Car', 'Transition to Electric Van', 'Transition to Electric Truck', 'Transition to Electric Bus','18', 'Water Saving'};
 
 Co2eS3 = SensitivityAnalysisTableOnlyOneStepS3;

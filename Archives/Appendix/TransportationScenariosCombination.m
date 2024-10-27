@@ -1,6 +1,6 @@
 function [EmissionsByYears,ConsumptionAmounts] = TransportationScenariosCombination(ScenariosTable,Years)
 %% Data file
-
+    global BaseYear
     Data = "Data.xlsx";
    
 %% Preparations
@@ -101,7 +101,7 @@ function [EmissionsByYears,ConsumptionAmounts] = TransportationScenariosCombinat
     EmissionsByYears = cell2table(EmissionsByYears, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     EmissionsByYears.Properties.VariableNames = ColumnNames;
@@ -110,7 +110,7 @@ function [EmissionsByYears,ConsumptionAmounts] = TransportationScenariosCombinat
     ConsumptionAmounts = cell2table(ConsumptionAmounts, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     ConsumptionAmounts.Properties.VariableNames = ColumnNames;

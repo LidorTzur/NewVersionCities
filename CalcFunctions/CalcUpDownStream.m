@@ -1,4 +1,5 @@
  function UpDownStreamEmissions = CalcUpDownStream(EmissionsByYears)
+    global BaseYear
     UpDownStreamEmissions = array2table(zeros(12, width(EmissionsByYears)));
     UpDownStreamEmissions.Properties.RowNames = {'Electricity-Local', 'Electricity-Global','Transportation-Local','Transportation-Global','Food-Local','Food-Global', 'Construction-Local','Construction-Global', 'Water-Local','Water-Global', 'Fuel for Industry - Local','Total'};%%'6 Food-Global'
     for i = 1:width(UpDownStreamEmissions)
@@ -33,7 +34,7 @@
 
     ColumnNames = cell(1,width(EmissionsByYears));
     for i=1:width(EmissionsByYears)
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     UpDownStreamEmissions.Properties.VariableNames = ColumnNames;

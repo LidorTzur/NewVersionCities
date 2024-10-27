@@ -5,17 +5,16 @@ addpath("CalcFunctions");
 addpath("UI");
 addpath("Data");
 
-DataBase = struct();
 Data = "Data.xlsx";
 
 %% Electricity Consumption - UPDATED 
 RowNames = {'Home', 'Public & Commercial', 'Industrial', 'Other', 'Transportation', 'Water Supply and Seweage Treatment', 'Total'};
 % create a table in the DataBase that contain the Elictricity consumption for every year to the target year
-DataBase.ElectricityConsumptionTable = array2table(zeros(7, Years),'RowNames',RowNames);
-ColumnNames = cell(1,Years);
+DataBase.ElectricityConsumptionTable = array2table(zeros(7, DataBase.Years),'RowNames',RowNames);
+ColumnNames = cell(1,DataBase.Years);
 % Add the name for each year column
 s1 = "KWH for "; 
-for i=1:Years
+for i=1:DataBase.Years
     s2 = num2str(i+2018);
     ColumnNames{i} = strcat(s1, s2); 
 end
@@ -34,11 +33,11 @@ DataBase.ElectricityLossRatio = ElectricityLossRatio{1,1}; % Save the single Dat
 %% Transportation Cosnumption
 RowNames = {'Bus', 'Car', 'Minibus', 'Motorcycle', 'Truck', 'LCV', 'PassengerTrain','Freight Train', 'Total'};
 % create a table in the DataBase that contain the Transportation KM for every year to the target year
-DataBase.TransportationConsumptionTable = array2table(zeros(9, Years),'RowNames', RowNames);
+DataBase.TransportationConsumptionTable = array2table(zeros(9, DataBase.Years),'RowNames', RowNames);
 % Add the name for each year column
-ColumnNames = cell(1,Years);
+ColumnNames = cell(1,DataBase.Years);
 s1 = "Annual Travel (KM) for ";
-for i=1:Years
+for i=1:DataBase.Years
     s2 = num2str(i+2018);
     ColumnNames{i} = strcat(s1, s2);
 end

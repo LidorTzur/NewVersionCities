@@ -1,6 +1,6 @@
 function [AllButOneScenariosTable] = TestScenariosTable(Data, ScenarioNumber, Years, S)
 %% Prep
-
+global BaseYear
 %%CurrentEnergyConsumptionFromRenewableEnergies = readtable(Data,'Sheet','ElectricityConsumption','Range','D14:D14','ReadVariableNames',false);
 CurrentEnergyConsumptionFromRenewableEnergies = Data.InitialPercentage(3);
 CurrentEnergyConsumptionFromNaturalGas = Data.InitialPercentage(2);
@@ -10,7 +10,7 @@ ColumnNames = ones(1, Years);
 AllButOneScenariosTable = array2table(zeros(19, Years), 'RowNames', RowNames);
 
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2016+i;
+    ColumnNames(i) = BaseYear-1+i; % changed!!!!!!!!
 end
 ColumnNames = string(ColumnNames);
 AllButOneScenariosTable.Properties.VariableNames = ColumnNames;

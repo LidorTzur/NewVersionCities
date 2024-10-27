@@ -1,4 +1,5 @@
 function [AllButOneScenariosTable] = AllButOneChangesByScenarios(Data, ScenarioNumber, Years, S, varargin)
+global BaseYear;
 % S is the vector of precentages
 %% Init
 q = inputParser;
@@ -15,7 +16,7 @@ ColumnNames = ones(1, Years);
 AllButOneScenariosTable = array2table(zeros(length(S), Years), 'RowNames', RowNames);
 %%ConsumptionChanges = array2table(zeros(sum(Type == "Consumption"), Years),'RowNames', RowNames(Type == 'Consumption'));
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2016+i;
+    ColumnNames(i) = (BaseYear-1)+i; % changed from 2016+i!!!!!!!!!!!!!
 end
 ColumnNames = string(ColumnNames);
 AllButOneScenariosTable.Properties.VariableNames = ColumnNames;
@@ -82,7 +83,7 @@ for i = 1:height(AllButOneScenariosTable)
             temp(j) = str2double(user_val{j});
         end
         for j = 1:2:length(temp)
-            MilesTonesTable{i,temp(j)-2016} = temp(j+1);
+            MilesTonesTable{i,temp(j)-(BaseYear-1)} = temp(j+1); % changed from 2016!!!!!!!!!!!!!
         end  
      end
      disp('');

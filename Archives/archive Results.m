@@ -1,4 +1,5 @@
 %% emissions - all scenrios
+global BaseYear
 BAU = CalcUpDownStream(EmissionsByYearsTest1);
 BAU(8,:) = [];
 Scenario1 = CalcUpDownStream(EmissionsByYearsTest2);
@@ -477,7 +478,7 @@ title(t, 'Yearly CO2E Emissions - Scenarios Implemenataion',  'FontSize', 28);
 figure
 t = tiledlayout(1,2)
 nexttile
-x = 2017:1:2050;
+x = BaseYear:1:2050; % changed it !!!!!!!!!!!!!!!!!!
 y1 = FullScenariosTable1{6,:};
 y2 = FullScenariosTable2{6,:};
 y3 = FullScenariosTable3{6,:};

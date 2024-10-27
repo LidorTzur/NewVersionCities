@@ -481,14 +481,14 @@ colors1Em = [
  
 NoPolicy = CalcUpDownStream(EmissionsByYearsTest1);
 Scenario2 = CalcUpDownStream(EmissionsByYearsTest3); 
-Order = {'Base Year - 2017', 'No Policy - 2035', 'Chosen Scenario - 2035'};
+Order = {'Base Year - 2019', 'No Policy - 2035', 'Chosen Scenario - 2035'}; % changeut!!!!!!!!!!!!
 NoPolicy.Properties.RowNames = strrep(NoPolicy.Properties.RowNames, 'Local', ' Domestic');
 
 %y = [NoPolicy{1:11,1}, NoPolicy{1:11,34}, Scenario1{1:11,34}, Scenario2{1:11,34}];
 y = [NoPolicy{1:2:11,1}, NoPolicy{1:2:11,19}, Scenario2{1:2:11,19}];
 
 y = y';
-x = categorical({'Base Year - 2017', 'No Policy - 2035', 'Chosen Scenario - 2035'});
+x = categorical({'Base Year - 2019', 'No Policy - 2035', 'Chosen Scenario - 2035'}); % change !!!!!!!!
 x = reordercats(x, Order);
 b = bar(x, y, 'stacked');
 
@@ -523,13 +523,13 @@ colors1Em = [
  
 NoPolicy = CalcUpDownStream(EmissionsByYearsTest1);
 Scenario2 = CalcUpDownStream(EmissionsByYearsTest3); 
-Order = {'Base Year - 2017', 'No Policy - 2035', 'Chosen Scenario - 2035'};
+Order = {'Base Year - 2019', 'No Policy - 2035', 'Chosen Scenario - 2035'};% change !!!!!!!!
 
 %y = [NoPolicy{1:11,1}, NoPolicy{1:11,34}, Scenario1{1:11,34}, Scenario2{1:11,34}];
 y = [NoPolicy{2:2:11,1}, NoPolicy{2:2:11,19}, Scenario2{2:2:11,19}];
 
 y = y';
-x = categorical({'Base Year - 2017', 'No Policy - 2035', 'Chosen Scenario - 2035'});
+x = categorical({'Base Year - 2019', 'No Policy - 2035', 'Chosen Scenario - 2035'});% change !!!!!!!!
 x = reordercats(x, Order);
 b = bar(x, y, 'stacked');
 

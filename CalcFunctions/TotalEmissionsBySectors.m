@@ -1,4 +1,5 @@
 function EmissionsBySectors = TotalEmissionsBySectors(EmissionsByYears)
+    global BaseYear
     EmissionsBySectors = array2table(zeros(6, width(EmissionsByYears)));
     EmissionsBySectors.Properties.RowNames = {'Electricity', 'Transportation', 'Construction', 'Water', 'Materials', 'Food'};
     for i = 1:width(EmissionsBySectors)
@@ -13,7 +14,7 @@ function EmissionsBySectors = TotalEmissionsBySectors(EmissionsByYears)
 
     ColumnNames = cell(1,width(EmissionsByYears));
     for i=1:width(EmissionsByYears)
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     EmissionsBySectors.Properties.VariableNames = ColumnNames;

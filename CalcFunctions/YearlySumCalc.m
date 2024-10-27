@@ -1,5 +1,6 @@
 function [YearlySumCalc] = YearlySumCalc(EmissionsByYearsBAU)
-YearlySumCalc = array2table(zeros(1, width(EmissionsByYearsBAU)));
+global BaseYear
+    YearlySumCalc = array2table(zeros(1, width(EmissionsByYearsBAU)));
 for i = 1:width(EmissionsByYearsBAU)
     Electricity = EmissionsByYearsBAU{2,i}{1,1}{7,9}+...
     sum(EmissionsByYearsBAU{3,i}{1,1}{:,7});
@@ -19,7 +20,7 @@ end
 
 ColumnNames = ones(1,width(EmissionsByYearsBAU));
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2016+i;
+    ColumnNames(i) = (BaseYear-1)+i; % changes from 2016+i !!!!!!!!!!!!!!!
 end
 ColumnNames = string(ColumnNames);
 YearlySumCalc.Properties.VariableNames = ColumnNames;

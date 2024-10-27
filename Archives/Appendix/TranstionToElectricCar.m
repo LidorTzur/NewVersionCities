@@ -1,6 +1,6 @@
 function [EmissionsByYears, ConsumptionAmounts] = TranstionToElectricCar(Data, ChangeByYears, Years)
 %% Preparations
-
+global BaseYear
 EmissionsByYears=cell(6,Years);
 ConsumptionAmounts=cell(5,Years);
 addpath("CalcFunctions");
@@ -67,7 +67,7 @@ end
     EmissionsByYears = cell2table(EmissionsByYears, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     EmissionsByYears.Properties.VariableNames = ColumnNames;
@@ -76,7 +76,7 @@ end
     ConsumptionAmounts = cell2table(ConsumptionAmounts, 'RowNames', RowNames);
     ColumnNames = cell(1,Years);
     for i=1:Years
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     ConsumptionAmounts.Properties.VariableNames = ColumnNames;

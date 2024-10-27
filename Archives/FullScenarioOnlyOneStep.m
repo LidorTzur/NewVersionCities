@@ -1,6 +1,6 @@
 function [EmissionsByYears,ConsumptionAmounts, Resources, WaterFromFoodCell] = FullScenarioOnlyOneStep(Data,ScenariosTable,Years,pop,index,orderIndex)
 %% Cut Vectors from Scenarios Table
-
+global BaseYear
 PopulationGrowthPercentage = ScenariosTable{1,:};
 ChangeInElectricityConsumptionPercentage = ScenariosTable{2,:};
 IncreaseInDiselinatedWater = ScenariosTable{3,:};
@@ -31,7 +31,7 @@ ConsumptionChangesTable = PopulationGrowthPercentage;
 
 YearsStringsForColNames = cell(1,Years);
 for i=1:Years
-    s1 = num2str(i+2016);
+    s1 = num2str(i+BaseYear-1); % changed
     YearsStringsForColNames{i} = s1;
 end
 %% Food Emissions & Food Resource Consumption - scenario 4
@@ -376,7 +376,7 @@ PercentageByYears = array2table(zeros(5,Years)); %% cell array that contains the
 RowNames = {'Coal', 'Natural Gas', 'Renewable', 'Soler', 'Mazut'};
 ColumnNames = cell(1,Years);
 for i=1:Years
-    s1 = num2str(i+2016);
+    s1 = num2str(i+BaseYear-1); % changed
     ColumnNames{i} = s1;
 end
 PercentageByYears.Properties.VariableNames = ColumnNames;

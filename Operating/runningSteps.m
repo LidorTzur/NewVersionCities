@@ -23,14 +23,14 @@ switch orderIndex
             EmissionsSumCurrentBase = EmissionsSumCalcOnlyOneStep(EmissionsByYears,Years);
             GlobalLocalEmissions = CalcGlobalLocal(EmissionsByYears);
             GlobalDiff = sum(GlobalLocalEmissions{2,width(GlobalLocalEmissions)}{1,:}) - sum(GlobalLocalEmissions{2,1}{1,:});
-            % total emissions of 2050 minus total of 2017 - GLOBAL
+            % total emissions of 2050 minus total of 2019 - GLOBAL
             LocalDiff = sum(GlobalLocalEmissions{1,width(GlobalLocalEmissions)}{1,:}) - sum(GlobalLocalEmissions{1,1}{1,:});
-            % total emissions of 2050 minus total of 2017 - LOCAL
+            % total emissions of 2050 minus total of 2019 - LOCAL
 
             [WaterSumCurrent, GlobalWaterDiff, LocalWaterDiff] = WaterSumCalcOnlyOne(ConsumptionAmounts, WaterFromFood,i);
             [AreaSumCurrent, GlobalAreaDiff, LocalAreaDiff] = AreaSumCalcOnlyOne(Resources);
                
-            %טבלה שנותנת את ההפרש בפליטות בין 2017 ל2050
+            %טבלה שנותנת את ההפרש בפליטות בין 2019 ל2050
             %OnlyOneAnalysis{i,1} = EmissionsSumCurrentBase(1);
             OnlyOneAnalysis{i,1} = GlobalDiff+LocalDiff;
             OnlyOneAnalysis{i,2} = GlobalDiff;
@@ -46,7 +46,7 @@ switch orderIndex
 
     case 3 %% All steps but one
         AllButOneScenariosTable = AllButOneChangesByScenarios(DataBase, 0, Years, ScenariosAndValues{:,scenarioIndex});
-        % will return 19X34 table, each cell is the change of this factor
+        % will return 17X34 table, each cell is the change of this factor
         % for that year, when 2050 is dictated by "the three scenarios".
         [population] = populationCal(AllButOneScenariosTable);
         [EmissionsByYearsFull, ConsumptionAmountsFull, ResourcesFull, WaterFromFoodFull] = FullScenario(DataBase, AllButOneScenariosTable, Years, population,orderIndex,0);
@@ -136,7 +136,7 @@ switch orderIndex
         [FullScenariosTable1] = AllButOneChangesByScenarios(DataBase, 0, Years, ScenariosAndValues{:,4}, 'MileStones', false);
         [population] = populationCal(FullScenariosTable1);
         [EmissionsByYearsTest1, ConsumptionAmounts1, Resources1, WaterFromFood1] = FullScenario(DataBase, FullScenariosTable1,Years,population,orderIndex,0);
-        Years = 19; % for 2035
+        Years = 17; % for 2035, and change to "ScenarioNumber" after it works!!!!!!!!!!!!!!!!!!!!
         EmissionsByYearsTest1 = EmissionsByYearsTest1(:,1:Years);
         ConsumptionAmounts1 = ConsumptionAmounts1(:,1:Years);
         Resources1 = Resources1(:,1:Years);
@@ -150,7 +150,7 @@ switch orderIndex
     case 8 % Sensitivity Analysis - +- 10%
 
         % preperations: define the new scenario precentages and the year.
-        Years = 19; % for 2035
+        Years = 17; % for 2035, and change to "ScenarioNumber" after it works!!!!!!!!!!!!!!!!!!!!
         RelevantScenarios = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 17, 19, 20];  % only choosing interesting scenarios
         rowNames = ScenariosAndValues.Properties.RowNames;
         RelevantScenarioNames = rowNames(RelevantScenarios);
@@ -169,16 +169,15 @@ switch orderIndex
 
             ScenarioIndex = RelevantScenarios(i); % iterarting through all the relevant scenarios
             OriginalPrecentage = ScenariosAndValues{ScenarioIndex, 9}; % saving the original value
-
             % running FULL SCENARIO 3 times: as is, +10%, -10%.
             [FullScenariosTable1] = AllButOneChangesByScenarios(DataBase, 0, Years, ScenariosAndValues{:,9}, 'MileStones', false);
             [population] = populationCal(FullScenariosTable1);
             [EmissionsByYearsTest1, ConsumptionAmounts1, Resources1, WaterFromFood1] = FullScenario(DataBase, FullScenariosTable1,Years,population,orderIndex,0);
             TotalEmission1 = CalcUpDownStream(EmissionsByYearsTest1);
-            Emission1_Sum = sum(TotalEmission1{1:11, 19});
+            Emission1_Sum = sum(TotalEmission1{1:11, Years}); % changed to Years instead of a Number!!!!!!!!!
             [AreaSum1, CostsSum1, WaterSum1] = CalcTotalResources(Resources1, ConsumptionAmounts1, WaterFromFood1);
-            Area1_Sum = sum(AreaSum1{1:4, 19});
-            Water1_Sum = sum(WaterSum1{1:5, 19});
+            Area1_Sum = sum(AreaSum1{1:4, Years}); % changed to Years instead of a Number!!!!!!!!!
+            Water1_Sum = sum(WaterSum1{1:5, Years}); % changed to Years instead of a Number!!!!!!!!!
 
             % new calculation for +10%
             ScenariosAndValues{ScenarioIndex, 9} = OriginalPrecentage + 0.1;
@@ -192,10 +191,10 @@ switch orderIndex
             [population] = populationCal(FullScenariosTable2);
             [EmissionsByYearsTest2, ConsumptionAmounts2, Resources2, WaterFromFood2] = FullScenario(DataBase, FullScenariosTable2,Years,population,orderIndex,0);
             TotalEmission2 = CalcUpDownStream(EmissionsByYearsTest2);
-            Emission2_Sum = sum(TotalEmission2{1:11, 19});
+            Emission2_Sum = sum(TotalEmission2{1:11, Years});  % changed to Years instead of a Number!!!!!!!!!
             [AreaSum2, CostsSum2, WaterSum2] = CalcTotalResources(Resources2, ConsumptionAmounts2, WaterFromFood2);
-            Area2_Sum = sum(AreaSum2{1:4, 19});
-            Water2_Sum = sum(WaterSum2{1:5, 19});
+            Area2_Sum = sum(AreaSum2{1:4, Years});  % changed to Years instead of a Number!!!!!!!!!
+            Water2_Sum = sum(WaterSum2{1:5, Years});  % changed to Years instead of a Number!!!!!!!!!
 
             ScenariosAndValues{6,9} = renewable_original; %restart
             ScenariosAndValues{7,9} = gas_original;
@@ -212,10 +211,10 @@ switch orderIndex
             [population] = populationCal(FullScenariosTable3);
             [EmissionsByYearsTest3, ConsumptionAmounts3, Resources3, WaterFromFood3] = FullScenario(DataBase, FullScenariosTable3,Years,population,orderIndex,0);
             TotalEmission3 = CalcUpDownStream(EmissionsByYearsTest3);
-            Emission3_Sum = sum(TotalEmission3{1:11, 19});
+            Emission3_Sum = sum(TotalEmission3{1:11, Years}); % changed to Years instead of a Number!!!!!!!!!
             [AreaSum3, CostsSum3, WaterSum3] = CalcTotalResources(Resources3, ConsumptionAmounts3, WaterFromFood3);
-            Area3_Sum = sum(AreaSum3{1:4, 19});
-            Water3_Sum = sum(WaterSum3{1:5, 19});
+            Area3_Sum = sum(AreaSum3{1:4, Years});% changed to Years instead of a Number!!!!!!!!!
+            Water3_Sum = sum(WaterSum3{1:5, Years});% changed to Years instead of a Number!!!!!!!!!
 
             ScenariosAndValues{6,9} = renewable_original; %restart
             ScenariosAndValues{7,9} = gas_original;

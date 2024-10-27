@@ -1,5 +1,6 @@
 %Calc the Global emission and the Local emission
 function [GlobalLocalEmission, TotalGlobalLocal] = CalcGlobalLocal(EmissionsByYears)
+    global BaseYear
     GlobalLocalEmission = cell(2,width(EmissionsByYears));
     TotalGlobalLocal = table(2,width(EmissionsByYears));
     for i = 1:width(EmissionsByYears)
@@ -30,7 +31,7 @@ function [GlobalLocalEmission, TotalGlobalLocal] = CalcGlobalLocal(EmissionsByYe
     GlobalLocalEmission = cell2table(GlobalLocalEmission);
     ColumnNames = cell(1,width(EmissionsByYears));
     for i=1:width(EmissionsByYears)
-        s1 = num2str(i+2016);
+        s1 = num2str(i+BaseYear-1); % changed
         ColumnNames{i} = s1;
     end
     GlobalLocalEmission.Properties.VariableNames = ColumnNames;

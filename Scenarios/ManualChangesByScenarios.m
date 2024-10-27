@@ -1,4 +1,5 @@
 function [ManualScenariosTable] = ManualChangesByScenarios(Data)
+    global BaseYear
     %% Create Scenarios Table
     Years = 34;
     ME = MException('MyComponent:noSuchVariable', ...
@@ -9,7 +10,7 @@ function [ManualScenariosTable] = ManualChangesByScenarios(Data)
     ManualScenariosTable = array2table(zeros(19, Years), 'RowNames', RowNames);
 
     for i = 1:width(ColumnNames)
-        ColumnNames(i) = 2016+i;
+        ColumnNames(i) = BaseYear-1+i; % changed!!!!!!!!
     end
     ColumnNames = string(ColumnNames);
     ManualScenariosTable.Properties.VariableNames = ColumnNames;

@@ -2,18 +2,18 @@ addpath("Scenarios");
 addpath("CalcFunctions");
 addpath("UI");
 addpath("Data");
-global BaseYear
+
 %%insert the changes from the scenarios excel
 ImprovementValues = readtable("The Three Scenarios.xlsx",'Sheet','Improvements','Range','B2:B5','ReadVariableNames',false);
 
 ColumnNames = ones(1, Years);
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = 2018+i;
+    ColumnNames(i) = BaseYear-1+i;
 end
 ColumnNames = string(ColumnNames);
 %% Electric Vehicles Improvements
 ElectricityConsumptionEmissionsInTransportationTable = array2table(zeros(height(DataBase.ElectricityConsumptionEmissionsInTransportation),Years));
-ElectricVehicleImprovements = ReductionVectorCalc(BaseYear,TargetYear, ImprovementValues{2,1});
+ElectricVehicleImprovements = ReductionVectorCalc(BaseYear, TargetYear_global, ImprovementValues{2,1});
 ElectricityConsumptionEmissionsInTransportationTable{:,1} = DataBase.ElectricityConsumptionEmissionsInTransportation;
 for i = 1:Years
     ElectricityConsumptionEmissionsInTransportationTable{1,i} = ElectricityConsumptionEmissionsInTransportationTable{1,1}*ElectricVehicleImprovements(i);
@@ -30,7 +30,7 @@ DataBase.ElectricityConsumptionEmissionsInTransportation = ElectricityConsumptio
 
 ElectricityFromWaterCoefficientsTable = array2table(zeros(height(DataBase.ElectricityConsumptionCoefficients),Years)); %create a table in a size of 6 on number of years
 ElectricityFromWaterCoefficientsTable{:,1} = DataBase.ElectricityConsumptionCoefficients; % insert to the 2019 year (first column) the ElectricityConsumptionCoefficients we have
-WaterDesalinationImprovements = ReductionVectorCalc(BaseYear,TargetYear, ImprovementValues{1,1});
+WaterDesalinationImprovements = ReductionVectorCalc(BaseYear,TargetYear_global, ImprovementValues{1,1});
 for i = 1:Years
     ElectricityFromWaterCoefficientsTable{1,i} = ElectricityFromWaterCoefficientsTable{1,1}.*WaterDesalinationImprovements(i);
     ElectricityFromWaterCoefficientsTable{2,i} = ElectricityFromWaterCoefficientsTable{2,1};
@@ -44,11 +44,11 @@ ElectricityFromWaterCoefficientsTable.Properties.RowNames = {'Desalination', 'Mo
 DataBase.ElectricityConsumptionCoefficients = ElectricityFromWaterCoefficientsTable;
 
 %% Natural Gas Improvements
-NaturalGasImprovements = GrowthVectorCalc(BaseYear,TargetYear, ImprovementValues{3,1})-1;
+NaturalGasImprovements = GrowthVectorCalc(BaseYear,TargetYear_global, ImprovementValues{3,1})-1;
 DataBase.NaturalGasImprovements = NaturalGasImprovements;
 
 %% Area For solar Energy Improvement - Given from cost efficiency file
-% AreaForSolarImprovement = ReductionVectorCalc(BaseYear,TargetYear, ImprovementValues{4,1});
+% AreaForSolarImprovement = ReductionVectorCalc(BaseYear,TargetYear_global, ImprovementValues{4,1});
 % for i = 1:Years
 %     CurrentArea = DataBase.AreaForSolarEnergyCoefficients(i)*AreaForSolarImprovement(i);
 %     if(CurrentArea >= DataBase.LowerBoundForArea)

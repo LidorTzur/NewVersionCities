@@ -157,7 +157,7 @@ switch orderIndex
     case 8 % Sensitivity Analysis - +- 10%
 
         % preperations: define the new scenario precentages and the year.
-        Years = 17; % for 2035, and change to "ScenarioNumber" after it works!!!!!!!!!!!!!!!!!!!!
+        Years = BaseYear-2035+1; % for 2035
         RelevantScenarios = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 17, 19, 20];  % only choosing interesting scenarios
         rowNames = ScenariosAndValues.Properties.RowNames;
         RelevantScenarioNames = rowNames(RelevantScenarios);

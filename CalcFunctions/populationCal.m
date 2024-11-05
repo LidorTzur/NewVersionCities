@@ -2,7 +2,8 @@ function [population] = populationCal(PrecentegeByTheYears)
 %% population data
 % Calculate the pupolations over the years
 global BaseYear
-population  = array2table(zeros(4,34));
+global TargetYear_global;
+population  = array2table(zeros(4,(BaseYear-TargetYear_global+1)));
 RowNames = {'Num','Years', 'Israel population', 'Palestinian Authority population'};
 population.Properties.RowNames = RowNames;
 

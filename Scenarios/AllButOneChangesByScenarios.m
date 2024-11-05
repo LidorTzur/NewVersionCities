@@ -1,7 +1,8 @@
 function [AllButOneScenariosTable] = AllButOneChangesByScenarios(Data, ScenarioNumber, Years, S, varargin)
-global BaseYear;
-current_food_lost = 1/3; % The assumption was that 33% of the food manufactured is lost 
 % S is the vector of changes precentages
+
+global BaseYear;
+global current_food_lost_global; % The assumption was that 33% of the food manufactured is lost 
 
 %% Bring to current situation - 2020
 YearsAfterAnalysis = 2020 - BaseYear; % changed from 4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -33,7 +34,7 @@ ColumnNames = ones(1, Years);
 AllButOneScenariosTable = array2table(zeros(length(S), Years), 'RowNames', RowNames);
 %%ConsumptionChanges = array2table(zeros(sum(Type == "Consumption"), Years),'RowNames', RowNames(Type == 'Consumption'));
 for i = 1:width(ColumnNames)
-    ColumnNames(i) = (BaseYear-1)+i; % changed from 2016+i!!!!!!!!!!!!!
+    ColumnNames(i) = (BaseYear-1)+i; 
 end
 ColumnNames = string(ColumnNames);
 AllButOneScenariosTable.Properties.VariableNames = ColumnNames;
@@ -102,7 +103,7 @@ for i = 1:height(AllButOneScenariosTable)
             temp(j) = str2double(user_val{j});
         end
         for j = 1:2:length(temp)
-            MilesTonesTable{i,temp(j)-(BaseYear-1)} = temp(j+1); % changed from 2016!!!!!!!!!!!!!
+            MilesTonesTable{i,temp(j)-(BaseYear-1)} = temp(j+1); 
         end  
      end
      disp('');
@@ -127,7 +128,7 @@ AllButOneScenariosTable{20,:} = CalcChangeVector(MilesTonesTable{20,:}, Years, S
 %% Supply 
 % Reducing beef consumption
 AllButOneScenariosTable{4,:} = CalcChangeVector(MilesTonesTable{4,:}, Years, S(4) ,'Growth', false);
-FoodPercentageActuallyConsumed = current_food_lost-S(5); 
+FoodPercentageActuallyConsumed = current_food_lost_global-S(5); 
 % Preventing food lost
 AllButOneScenariosTable{5,:} = CalcChangeVector(MilesTonesTable{5,:}, Years, FoodPercentageActuallyConsumed, 'Growth', false);
 %electricity production by renewable resources

@@ -139,7 +139,7 @@ end
 function NewVehicleAmountCell = CalulateChangeInVehicleAmounts(TrasnportationConsumptionTable, VehicleAmountCell)
     NewVehicleAmountCell = cell(1,width(TrasnportationConsumptionTable));
     NewVehicleAmountCell{1} = VehicleAmountCell{1};
-    RidesPerDay = 4;
+    global RidesPerDay_global;
     KMPerCar = TrasnportationConsumptionTable{2,1}/VehicleAmountCell{1}{1,2};
     KMPerBus = TrasnportationConsumptionTable{1,1}/VehicleAmountCell{1}{1,1};
     RowNames = {'Quantity', 'Gasoline', 'Diesel', 'Drive Per Day', 'Drive Per Year', 'Cars Per Year'};
@@ -152,12 +152,12 @@ function NewVehicleAmountCell = CalulateChangeInVehicleAmounts(TrasnportationCon
         NewVehicleAmountCell{i} = array2table(zeros(6,6), 'RowNames', RowNames);
         NewVehicleAmountCell{i}{:,:} = VehicleAmountCell{i}{:,:};
         NewVehicleAmountCell{i}{1,1} = ceil((TrasnportationConsumptionTable{1,i}-TrasnportationConsumptionTable{1,i-1})/KMPerBus) + NewVehicleAmountCell{i-1}{1,1};
-        NewVehicleAmountCell{i}{4,1} = NewVehicleAmountCell{i}{1,1}*RidesPerDay;
+        NewVehicleAmountCell{i}{4,1} = NewVehicleAmountCell{i}{1,1}*RidesPerDay_global;
         NewVehicleAmountCell{i}{5,1} = NewVehicleAmountCell{i}{4,1}*365;
         NewVehicleAmountCell{i}{6,1} = NewVehicleAmountCell{i}{1,1}*365;
         
         NewVehicleAmountCell{i}{1,2} = NewVehicleAmountCell{i-1}{1,2} - floor((TrasnportationConsumptionTable{2,i-1}-TrasnportationConsumptionTable{2,i})/KMPerCar);
-        NewVehicleAmountCell{i}{4,2} = NewVehicleAmountCell{i}{1,2}*RidesPerDay;
+        NewVehicleAmountCell{i}{4,2} = NewVehicleAmountCell{i}{1,2}*RidesPerDay_global;
         NewVehicleAmountCell{i}{5,2} = NewVehicleAmountCell{i}{4,2}*365;
         NewVehicleAmountCell{i}{6,2} = NewVehicleAmountCell{i}{1,2}*365;
         

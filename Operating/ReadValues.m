@@ -8,6 +8,12 @@ addpath("Data");
 DataBase = struct();
 Data = "Data.xlsx";
 
+% Insert data to the DataBase
+DataBase.WasteToElectricity = WasteToElectricity;
+DataBase.IncinarationEmissionCoefficient = IncinarationEmissionCoefficient;
+DataBase.TransitionToBus = TransitionToBus;
+DataBase.TransitionToTrain = TransitionToTrain;
+
 %% Electricity Consumption - UPDATED 
 RowNames = {'Home', 'Public & Commercial', 'Industrial', 'Other', 'Transportation', 'Water Supply and Seweage Treatment', 'Total'};
 % create a table in the DataBase that contain the Elictricity consumption for every year to the target year
@@ -16,7 +22,7 @@ ColumnNames = cell(1,Years);
 % Add the name for each year column
 s1 = "KWH for "; 
 for i=1:Years
-    s2 = num2str(i+2018);
+    s2 = num2str(i+BaseYear-1);
     ColumnNames{i} = strcat(s1, s2); 
 end
 DataBase.ElectricityConsumptionTable.Properties.VariableNames = cellstr(ColumnNames); % Convert the column names to string
@@ -39,7 +45,7 @@ DataBase.TransportationConsumptionTable = array2table(zeros(9, Years),'RowNames'
 ColumnNames = cell(1,Years);
 s1 = "Annual Travel (KM) for ";
 for i=1:Years
-    s2 = num2str(i+2018);
+    s2 = num2str(i+BaseYear-1);
     ColumnNames{i} = strcat(s1, s2);
 end
 DataBase.TransportationConsumptionTable.Properties.VariableNames = cellstr(ColumnNames);
@@ -77,7 +83,7 @@ DataBase.TotalGrowthForLocalFood = TotalGrowthForLocalFood{1,1}; % Save it in th
 
 
 %% water consumption
-%% Need to Update- no need for water for Neighbors (or just put a zero there)!!!!!!!!!!!!!!!!!!!!!
+% no need for water for Neighbors (just put a zero there)
 DataBase.WaterConsumptionCell = cell(1,Years); 
 RowNames = {'Agriculture', 'Marginal Water Percentage', 'Home Consumption(Urban)', 'Industry', 'Water for Nature', 'Water for Neighbors'};
 % Update the first cell to be a table with 6 rows and 5 columns
@@ -131,7 +137,7 @@ DataBase.ConstructionTable = array2table(zeros(11,Years), 'RowNames', RowNames);
 s1 = "Area for Construction ";
 ColumnNames = cell(1,Years);
 for i=1:Years
-    s2 = num2str(i+2018);
+    s2 = num2str(i+BaseYear-1);
     ColumnNames{i} = strcat(s1, s2);
 end
 DataBase.ConstructionTable.Properties.VariableNames = cellstr(ColumnNames); % Convert column names to string
@@ -139,7 +145,7 @@ DataBase.ConstructionTable.Properties.VariableNames = cellstr(ColumnNames); % Co
 DataBase.ConstructionTable{1:10, 1} = table2array(readtable(Data,'Sheet','Construction','Range','C3:C12','ReadVariableNames',false));
 DataBase.ConstructionTable{11, 1} = sum(DataBase.ConstructionTable{1:10, 1});
 
-% I changed it to be in the excel, so i wont be needed to chenge it for each city
+% I changed it to be in the excel, so i wont be needed to change it for each city
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 TotalBuiltArea = readtable(Data,'Sheet','Construction','Range','R18:R18','ReadVariableNames',false);
 DataBase.TotalBuiltArea = TotalBuiltArea{1,1};  % square kilometer
@@ -281,8 +287,8 @@ InflationCoefficient = readtable(Data,'Sheet','FuelProductionEmissionsForTrans',
 DataBase.InflationCoefficient = InflationCoefficient{1,1};
 
 % I think that we already defined it. check!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-CrudeOilToFuelRatio = readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','AC51:AC51','ReadVariableNames',false);
-DataBase.CrudeOilToFuelRatio = CrudeOilToFuelRatio{1,1};
+%CrudeOilToFuelRatio = readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','AC51:AC51','ReadVariableNames',false);
+%DataBase.CrudeOilToFuelRatio = CrudeOilToFuelRatio{1,1};
 % Fuel Amounts For Transportation - Natural Gas to Fuel Refining for transportation (Ton)
 NaturalGasForFuelRefining = readtable(Data,'Sheet','FuelProductionEmissionsForTrans','Range','I35:I35','ReadVariableNames',false);
 DataBase.NaturalGasForFuelRefining = NaturalGasForFuelRefining{1,1};
@@ -299,13 +305,6 @@ DataBase.ExportWasteForRecyclingPercentage = table2array(readtable(Data,'Sheet',
 DataBase.WaterConsumptionCoefficientsLocal = table2array(readtable(Data,'Sheet','Food','Range','H4:H68','ReadVariableNames',false));
 DataBase.WaterConsumptionCoefficientsGlobal = table2array(readtable(Data,'Sheet','Food','Range','I4:I68','ReadVariableNames',false));    
 
-%% Waste incinaration values - Update in the excels...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-DataBase.WasteToElectricity = 0.807;
-DataBase.IncinarationEmissionCoefficient = 1.01;
-
-%% Transition to buses and trains - Update in the excels...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-DataBase.TransitionToBus = 0.5 
-DataBase.TransitionToTrain = 1- DataBase.TransitionToBus;
 
 %% Organic Waste Amounts - for food
 % CH4 Organic Waste Emission Coefficient (kg/kg)
@@ -323,10 +322,10 @@ DataBase.AreaForSolarEnergyCoefficients = readtable(Data,'Sheet','Area','Range',
 DataBase.RenewablePercents = [1 0 0 0];
 DataBase.RenewablePercents = array2table(DataBase.RenewablePercents);
 DataBase.RenewablePercents.Properties.VariableNames = {'PV','Wind', 'Biomass', 'Thermo Solar'};
-% I dont kmow, we need to understant it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-DataBase.LowerBoundForArea = 6; %% according to shockley-queisser limit
+% Insert the maximum theoretical efficiency of a solar cell
+DataBase.LowerBoundForArea = LowerBoundForArea; 
 DataBase.KWToKwh = readtable(Data,'Sheet','Area','Range','N39:O44','ReadRowNames',true);
-DataBase.PVType = 'Dual';
+DataBase.PVType = PVType;
 
 %area distribution
 DataBase.AreaDistribution = readtable(Data,'Sheet','Area','Range','H1:K6','ReadVariableNames',true, 'ReadRowNames',true);

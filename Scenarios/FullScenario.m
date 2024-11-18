@@ -1,6 +1,7 @@
 function [EmissionsByYears,ConsumptionAmounts, Resources, WaterFromFoodCell] = FullScenario(Data,ScenariosTable,Years,pop,orderIndex, index)
 %% Cut Vectors from Scenarios Table
 global BaseYear
+
 PopulationGrowthPercentage = ScenariosTable{1,:};
 ChangeInElectricityConsumptionPercentage = ScenariosTable{2,:};
 IncreaseInDiselinatedWater = ScenariosTable{3,:};

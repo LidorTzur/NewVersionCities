@@ -7,22 +7,6 @@ BaseYear = 2019;
 ScenarioNumber = 19; % For 2035 - water saving
 Years = TargetYear_global-BaseYear+1; %השנים שבין שנת הבסיס לשנת המטרה
 
-%% Lidor: population data, for the "populationCal" script
-global PopulationStartYear_global;
-PopulationStartYear_global = readtable(Data, 'Sheet', 'Population', 'Range', 'L17:L17', 'ReadVariableNames', false);
-PopulationStartYear_global = table2array(PopulationStartYear_global); % המרה ממבנה טבלה למערך
-PopulationStartYear_global = PopulationStartYear_global(1); % שליפת הערך הבודד
-PopulationStartYear_global = double(PopulationStartYear_global); % לוודא שהערך הוא מספרי
-PopulationStartYear_global = PopulationStartYear_global / 1000000; 
-
-global GrowthRate_global;
-GrowthRate_global = readtable(Data, 'Sheet', 'Population', 'Range', 'I35:I35', 'ReadVariableNames', false);
-GrowthRate_global = table2array(GrowthRate_global); % המרה ממבנה טבלה למערך
-GrowthRate_global = GrowthRate_global{1}; % שליפת הערך הבודד
-GrowthRate_global = str2double(GrowthRate_global); % לוודא שהערך הוא מספרי
-GrowthRate_global = 1 + GrowthRate_global; % חישוב נוסף (אם נדרש)
-
-
 %% Food lost
 % The assumption was that 33% of the food manufactured is lost
 global current_food_lost_global;
@@ -64,17 +48,39 @@ PopulationGrowth = {0, 0.45, 0.9};
 ElectricityPerCapita = {0, 0.2, 0.41};
 DesalinatedWater = {0,1.32,2.64};
 
+%% population data
+global PopulationStartYear;
+PopulationStartYear = readtable(Data, 'Sheet', 'Population', 'Range', 'L17:L17', 'ReadVariableNames', false);
+PopulationStartYear = table2array(PopulationStartYear); % המרה ממבנה טבלה למערך
+PopulationStartYear = PopulationStartYear(1); % שליפת הערך הבודד
+PopulationStartYear = double(PopulationStartYear); % לוודא שהערך הוא מספרי
+PopulationStartYear = PopulationStartYear / 1000000; % חישוב נוסף (אם נדרש)
 
-% Lidor: In the "populationCal" script - not sure if we need it here too
+GrowthRate = readtable(Data, 'Sheet', 'Population', 'Range', 'I35:I35', 'ReadVariableNames', false);
+GrowthRate = table2array(GrowthRate); % המרה ממבנה טבלה למערך
+GrowthRate = GrowthRate{1}; % שליפת הערך הבודד
+GrowthRate = str2double(GrowthRate); % לוודא שהערך הוא מספרי
+GrowthRate = 1 + GrowthRate; % חישוב נוסף (אם נדרש)
+
 population  = array2table(zeros(4,Years));
 RowNames = {'Num','Years', 'Israel population', 'Palestinian Authority population'};
 pop.Properties.RowNames = RowNames;
-% Filling the Data to every year (By option A in the excel sheet)
-for i =1:Years
-    population(1,i) = {i};
-    population(2,i) = {i+BaseYear-1};
-    population(3,i) = {PopulationStartYear_global*GrowthRate_global^(i-1)};
-    population(4,i) = {0*0^(i-1)}; % No palestinian in beer sheva..
+
+% In the "populationCal" script
+% % Filling the Data to every year (By option A in the excel sheet)
+% for i =1:Years
+%     population(1,i) = {i};
+%     population(2,i) = {i+BaseYear-1};
+%     population(3,i) = {PopulationStartYear*GrowthRate^(i-1)};
+%     population(4,i) = {0*0^(i-1)}; % No palestinian in beer sheva..
+    
+    % Lidor: The water model uses this Configuration
+    pop(i+1,1) = {i};
+    pop(i+1,2) = {i+BaseYear-1};
+    pop(i+1,3) = {PopulationStartYear*GrowthRate^(i-1)};
+    pop(i+1,4) = {0*0^(i-1)}; % No palestinian in beer sheva..
+
 end
 
+%%
 beep;

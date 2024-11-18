@@ -117,7 +117,9 @@ DataBase.WaterConsumptionCell{1}.Properties.VariableNames = ColNames;
 % Read the values of Waste Treatment Emmission Coefficients
 DataBase.SewegeTreatmentEmissionsCoefficitns = readtable(Data,'Sheet','Water','Range','B42:C42','ReadVariableNames',false);
 DataBase.SewegeTreatmentEmissionsCoefficitns.Properties.VariableNames = {'Air Pollutants (KG\Ton)', 'GHG (KG\Ton)'};
-% Read the values of Loss Ratio (Water that leaks/ evoparates from the pipes, and doesn't reach the consumer).
+% Read the values of Loss Ratio (Water that leaks/ evoparates from the
+% pipes, and doesn't reach the consumer). - or maybe is the electricity
+% loss ratio
 LossRatio = readtable(Data,'Sheet','Water','Range','J33:J33','ReadVariableNames',false);
 DataBase.LossRatio = LossRatio{1,1};
 

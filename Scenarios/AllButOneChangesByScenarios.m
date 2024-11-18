@@ -30,6 +30,7 @@ CurrentEnergyConsumptionFromNaturalGas = Data.InitialPercentage(2);
 
 % Define the scenarios parameters inputs 
 RowNames = {'Population Growth', 'Increased Electricity Per Capita', 'Increase in Desalinared Water', 'Reducing Beef Consumption', 'Preventing Food Loss', 'Change In Energy Consumption From Renewable Energies', 'Electricity Production by Natural Gas','Electricity Saving','Fuel for Energy','Recycled Waste', 'Burning Waste', 'Reduction Of Mileage', 'Transition To Public Transportation', 'Transition to Electric Car', 'Transition to Electric Van', 'Transition to Electric Truck', 'Transition to Electric Bus','18', 'Water Saving', 'Vegetarians'};
+ChangesNumRows = numel(RowNames); %% Lidor changes
 ColumnNames = ones(1, Years);
 AllButOneScenariosTable = array2table(zeros(length(S), Years), 'RowNames', RowNames);
 %%ConsumptionChanges = array2table(zeros(sum(Type == "Consumption"), Years),'RowNames', RowNames(Type == 'Consumption'));
@@ -76,7 +77,7 @@ elseif(ScenarioNumber ~= 0 && q.Results.OnlyOne == false)
 end
 
 % Specific Changes
-MilesTonesTable = array2table(zeros(20, Years));
+MilesTonesTable = array2table(zeros(ChangesNumRows, Years));
 % MilesTonesTable{6,14} = 0.3;
 % MilesTonesTable{7,14} = 0.7;
 
@@ -198,7 +199,7 @@ for i = 1:Years
     AllButOneScenariosTable{17, i} = AllButOneScenariosTable{17, i} - 1;
 end
 
-% water saving- why?!!!!!!!!!!!!!!!!!!
+% water saving- why?!!!!!!!!!!!!!!!!!! I think because it (the consumption through the years) doesn't changed
 AllButOneScenariosTable{18,:} = 1;
 
 

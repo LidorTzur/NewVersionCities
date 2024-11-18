@@ -88,7 +88,8 @@ switch orderIndex
         % Returns: total Co2 by category, amounts of water/fuels/construction materials, all other resources by category, water for food.
         % ([EmissionsByYearsTest1, ConsumptionAmounts1, Resources1, WaterFromFood1])
 
-        [FullScenariosTable1] = AllButOneChangesByScenarios(DataBase, 0, Years, ScenariosAndValues{:,4}, 'MileStones', false);
+          
+        [FullScenariosTable1] = AllButOneChangesByScenarios(DataBase, 0, Years, ScenariosAndValues{:,4}, 'MileStones', false); %% AllButOneChangesByScenarios(Data, ScenarioNumber, Years, S, varargin)
         [population] = populationCal(FullScenariosTable1);
         [EmissionsByYearsTest1, ConsumptionAmounts1, Resources1, WaterFromFood1] = FullScenario(DataBase, FullScenariosTable1,Years,population,orderIndex,0);
 

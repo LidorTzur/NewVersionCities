@@ -4,6 +4,8 @@
  % returns all these tables based only on population growath/ some coefficient*population growth,
  % (all the other factors arent being taken into account).
 
+ global BaseYear
+
 %% Electricity Consumption
 p = inputParser;
 addOptional(p,'ChangesStruct', []);
@@ -100,26 +102,47 @@ end
 %    FoodConsumptionCell{i} =  CurrentConsumption;
 % end
 
+
+
 %% Water model pre-data 
+% Create an array that contains: consumptions for all years (until target),
+% for all the factors that have a consumption changing (and not due to
+% population growth. ('Agriculture per capita', 'Water for nature', 'Drilling Water') 
+
+% all the sectors that have consumption changes over the years
 waterData  = array2table(zeros(3,Years));
 RowNames = {'Agriculture per capita', 'Water for nature', 'Drilling Water'};
 waterData.Properties.RowNames = RowNames;
-waterData(3,1) = {956}; % Ground Water
+
+% Drilling Water to first year (2019)
+waterData(3,1) = {956}; % Ground Water ------ Lidor: need to understand
+
 for i =1:Years
-   waterData(1,i) = {-10.79*log(i+16)+167.91}; % Agriculture per capita
-   switch true % water for nature
-       case i<10
+
+   % Agriculture per capita to all years
+   waterData(1,i) = {-10.79*log(i+(BaseYear-2001+1))+167.91}; % Agriculture per capita - based on 2001 data.
+   
+   % water for nature (conditions to be between some years ...) from the
+   % "צרכנים" sheet in the water model excel in the projects files of dor
+   % Lidor: I adjusted the years number to 2019
+   switch true 
+       case i<7
           waterData(2,i) = {25};
-       case i>=10 & i<15
+       case i>=7 & i<12
           waterData(2,i) = {35};
-       case i>=15 & i<25
+       case i>=12 & i<22
           waterData(2,i) = {50};
-       case i>=25 & i<35
+       case i>=22 & i<32
           waterData(2,i) = {75};
    end
-   if i>1    % Ground Water
+   
+   % Ground Water
+   if i>1   % means that is not in the Base year
+
        waterData(3,i) = {waterData{3,i-1}*0.9901};
-       if i==6 %A djustment to the water model data for 2022, until all the data in the software is updated
+
+       if i==6 % Adjustment to the water model data for 2022, until all the data in the software is updated
+           % Lidor: also here, needs to understand, where this datum from?!
             waterData(3,i) = {1080};
        end
    
@@ -127,12 +150,14 @@ for i =1:Years
 
 end
 
+
 %% Water Consumption
 WaterConsumptionCell = Data.WaterConsumptionCell;
 ColNames = {'Water for Domestic & Industrial', 'Water for Agriculture', 'Water for Neighbors', 'Water for  Nature', 'Drilling Water', 'Reclaimed Wastewater', 'Brackish water, fresh and non-fresh reservoir water', 'Desalinated Water'};
 Initialization = WaterConsumptionCell{1}{:,1:5};
 CurrentConsumption = array2table(zeros(1,8), 'VariableNames', ColNames);
-%%2017 Data
+
+%%2017 Data - from Dor's Model
 CurrentConsumption{1,1} = 983;
 CurrentConsumption{1,2} = 1248;
 CurrentConsumption{1,3} = 135;
@@ -144,7 +169,10 @@ CurrentConsumption{1,8} = 586;
 
 WaterConsumptionCell{1} =  CurrentConsumption;
 
-if (ScenariosTable{1,1}) == ScenariosTable{1,width(ScenariosTable)} && (orderIndex == 2) %The essential change that ensures the correctness of the water model in a single scenario
+%The essential change that ensures the correctness of the water model in a single scenario
+% Data for 2022 - another point we insert to increase accuracy
+% Lidor: validate it too
+if (ScenariosTable{1,1}) == ScenariosTable{1,width(ScenariosTable)} && (orderIndex == 2) 
     for i =2:Years
         CurrentConsumption = array2table(zeros(1,8), 'VariableNames', ColNames);
         CurrentConsumption{1,1} = 1070;
@@ -169,7 +197,8 @@ else
         CurrentConsumption{1,6} = 0.66*CurrentConsumption{1,1}; %% WasteWater from
         CurrentConsumption{1,7} = 250; %% Brackish water, fresh and non-fresh reservoir water
         CurrentConsumption{1,8} = CurrentConsumption{1,1}*0.898904 + CurrentConsumption{1,2}*0.35 + CurrentConsumption{1,3} - CurrentConsumption{1,5}; %% desalinated from
-        if i == 6 % Adjustment to the water model data for 2022, until all the data in the software is updated
+        if i == (2022-BaseYear+1) % Adjustment to the water model data for 2022, until all the data in the software is updated - to give extra data to the predictions
+                  % Lidor: I put 2022-BaseYear+1 instead of 6 
             CurrentConsumption{1,1} = 1070;
             CurrentConsumption{1,2} = 1300;
             CurrentConsumption{1,3} = 190;
